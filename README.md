@@ -3,14 +3,17 @@ Setup servidor de domotica
 
 bios  -> restart after power loss
 
-Máquina:[nombre_maquina]
+### Instalar Debian.
 
-Dominio: [nombre_dominio]
+Environment XFCE
+
+[x] SSH
 
 su: root / [pwd_su]
 
 Usuario: [user - domotica] / [pw_usr]
 
+### Conceder persmios SU a usuario desde terminal:
 
 ```
 su - 
@@ -22,6 +25,8 @@ exit
 ### Set grub boot timeout = 0 
 
 `sudo nano /etc/default/grub`
+
+modificar TIMEOUT a 0; save, exit
 
 `sudo update-grub`
 
@@ -36,19 +41,9 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo docker run -itd -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /docker/portainer:/data portainer/portainer-ce
  ```
 
-### portainer:  
+`sudo chown domotica -R /docker`
 
-`sudo apt-get install docker-compose`
- 
-`sudo chown enman -R /docker`
-
-#### Portainer update
-```
-sudo docker stop portainer
-sudo docker rm portainer
-sudo docker pull portainer/portainer-ce:2.21.5
-sudo docker run -itd -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /docker/portainer:/data portainer/portainer-ce:2.21.5
- ```
+Acceder via navegador [IP]:9000
 
 ### samba:  
 
@@ -78,7 +73,9 @@ browseable = yes
 create mask = 0755 
 directory mask = 0755 
 ```
+
 añadir usuario/password, habilitar usuario y reiniciar servicio: 
+
 ```
 sudo smbpasswd -L -a domotica 
 [password] 
@@ -88,6 +85,8 @@ sudo /etc/init.d/smbd restart
 ```
 
 ### Node-red 
+
+Desde portainer/stacks > new stack > copiar & deploy stack
 
 ```
 services: 
@@ -107,19 +106,9 @@ stop container
 
 `sudo chown domotica:domotica -R /docker`
     
-Open SSH session by putty to machine 
+restart container
 
-`cd /docker/nodered/data`
-`sudo nano settings.js`
-
-Copy and/or uncomment the contextStorage property as follows 
-```
-    contextStorage: {
-        default: {
-            module:"localfilesystem"
-        },
-    },
-```
+Desde nodered [IP]:1880
 
 manage pallete
 
@@ -131,6 +120,8 @@ node-red-contrib-ui-media
 
 
 ### Influxdb2 
+
+Desde portainer/stacks > new stack > copiar & deploy stack
 
 ```
 services:
@@ -148,7 +139,11 @@ services:
 tokens, set bucket to persistance = custom / 2Y
 
 ### Grafana 
+
+Desde portainer/stacks > new stack > copiar & deploy stack
+
 initial password: admin/admin
+
 
 ```
 services: 
@@ -162,6 +157,7 @@ services:
     volumes: 
       - /docker/grafana/var/lib/grafana:/var/lib/grafana 
 ```
+
 Configure InfluxDB authentication:
 
 - Token authentication
@@ -170,13 +166,10 @@ Configure InfluxDB authentication:
 		- Header: Enter Authorization
 		- Value: Use the Tokenschema and provide your InfluxDB API token. For example:
 
-```
-Token y0uR5uP3rSecr3tT0k3n
-```
 
-	- Under InfluxDB Details, do the following:
-		- Database: Enter the database name mapped to your InfluxDB 2.7bucket
-		- HTTP Method: Select GET
+'Token y0uR5uP3rSecr3tT0k3n'
 
-
+ - Under InfluxDB Details, do the following:
+	- Database: Enter the database name mapped to your InfluxDB bucket
+	- HTTP Method: Select GET
 
