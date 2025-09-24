@@ -112,11 +112,11 @@ Desde nodered [IP]:1880
 
 manage pallete
 
-node-red-contrib-influxdb 
-node-red-contrib-spreadsheet-in 
-node-red-contrib-moment 
-node-red-dashboard 
-node-red-contrib-ui-media 
+- node-red-contrib-influxdb
+- node-red-contrib-spreadsheet-in 
+- node-red-contrib-moment 
+- node-red-dashboard 
+- node-red-contrib-ui-media 
 
 
 ### Influxdb2 
