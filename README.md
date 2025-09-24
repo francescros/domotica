@@ -84,6 +84,43 @@ sudo smbpasswd -L -e domotica
 sudo /etc/init.d/smbd restart 
 ```
 
+## Mosquitto
+
+```
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - /docker/mosquitto:/mosquitto
+      - /docker/mosquitto/config:/mosquitto/config
+      - /docker/mosquitto/logs:/mosquitto/log
+      - /docker/mosquitto/data:/mosquitto/data
+    restart: always
+    environment:
+      - TZ=Europe/Madrid
+
+```
+Editar fichero de configuración
+
+`sudo nano /docker/mosquitto/config/mosquitto.conf`
+
+y que quede así:
+
+```
+persistence true
+persistence_location /mosquitto/data/
+log_dest file /mosquitto/log/mosquitto.log
+listener 1883
+
+## Authentication ##
+allow_anonymous true
+```
+
+
 ### Node-red 
 
 Desde portainer/stacks > new stack > copiar & deploy stack
