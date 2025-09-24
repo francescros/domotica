@@ -1,9 +1,9 @@
 # domotica
-Setup servidor de domotica
+Setup de servidor de domotica
 
 bios  -> restart after power loss
 
-### Instalar Debian.
+## Instalar Debian.
 
 Environment XFCE
 
@@ -30,7 +30,8 @@ modificar TIMEOUT a 0; save, exit
 
 `sudo update-grub`
 
-### Docker + portainer 
+## Docker + portainer 
+
 ```
 sudo apt-get install ca-certificates curl gnupg lsb-release  
 sudo mkdir -p /etc/apt/keyrings  
@@ -45,7 +46,7 @@ sudo docker run -itd -p 8000:8000 -p 9000:9000 --name=portainer --restart=always
 
 Acceder via navegador [IP]:9000
 
-### samba:  
+## samba:  
 
 `sudo apt-get install samba`
 
@@ -120,8 +121,7 @@ listener 1883
 allow_anonymous true
 ```
 
-
-### Node-red 
+## Node-red 
 
 Desde portainer/stacks > new stack > copiar & deploy stack
 
@@ -176,7 +176,8 @@ services:
 
 ```
 
-## HASS configurator
+### HASS configurator
+
 ```
 services: 
   hass-configurator: 
@@ -190,6 +191,18 @@ services:
       - 3218:3218/tcp
 
 ```
+
+### HACS
+Abrir terminal en portainer y ejecutar
+```
+wget -O - https://get.hacs.xyz | bash -
+```
+Reiniciar Home Assistant
+https://hacs.xyz/docs/configuration/basic
+
+Refrescar cache del navegador con [Ctrl]+[F5]
+Home Assistant > añadir integración > HACS
+aceptar reglas de uso y seguir instrucciones para registrar para github
 
 
 ## ESPHome
@@ -211,20 +224,7 @@ services:
 
 ```
 
-### HACS
-Abrir terminal en portainer y ejecutar
-```
-wget -O - https://get.hacs.xyz | bash -
-```
-Reiniciar Home Assistant
-https://hacs.xyz/docs/configuration/basic
-
-Refrescar cache del navegador con [Ctrl]+[F5]
-Home Assistant > añadir integración > HACS
-aceptar reglas de uso y seguir instrucciones para registrar para github
-
-
-### Influxdb2 
+## Influxdb2 
 
 Desde portainer/stacks > new stack > copiar & deploy stack
 
@@ -243,7 +243,7 @@ services:
 ```
 tokens, set bucket to persistance = custom / 2Y
 
-### Grafana 
+## Grafana 
 
 Desde portainer/stacks > new stack > copiar & deploy stack
 
