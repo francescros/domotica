@@ -155,6 +155,74 @@ manage pallete
 - node-red-dashboard 
 - node-red-contrib-ui-media 
 
+## Home Assistant
+
+```
+services:  
+  homeassistant:  
+    container_name: homeassistant  
+    image: ghcr.io/home-assistant/home-assistant:stable  
+    network_mode: host 
+    privileged: true  
+    environment:  
+      - TZ=Europe/Madrid  
+    ports: 
+      - 8123:8123/tcp 
+      - 5683:5683 
+    volumes:  
+      - /docker/homeassistant/config:/config 
+      - /etc/localtime:/etc/localtime:ro  
+    restart: always
+
+```
+
+## HASS configurator
+```
+services: 
+  hass-configurator: 
+    container_name: configurator 
+    image: causticlab/hass-configurator-docker:latest 
+    volumes: 
+      - /docker/homeassistant/configurator:/config 
+      - /docker/homeassistant/config:/hass-config 
+    restart: always 
+    ports: 
+      - 3218:3218/tcp
+
+```
+
+
+## ESPHome
+```
+services: 
+  esphome: 
+    container_name: esphome 
+    image: esphome/esphome
+    environment:  
+      - TZ=Europe/Madrid
+    network_mode: host
+    ports:  
+      - 6052:6052
+      - 6123:6123 
+    volumes: 
+      - /etc/localtime:/etc/localtime:ro 
+      - /docker/esphome/config:/config
+    restart: always
+
+```
+
+### HACS
+Abrir terminal en portainer y ejecutar
+```
+wget -O - https://get.hacs.xyz | bash -
+```
+Reiniciar Home Assistant
+https://hacs.xyz/docs/configuration/basic
+
+Refrescar cache del navegador con [Ctrl]+[F5]
+Home Assistant > añadir integración > HACS
+aceptar reglas de uso y seguir instrucciones para registrar para github
+
 
 ### Influxdb2 
 
