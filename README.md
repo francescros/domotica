@@ -224,6 +224,23 @@ services:
 
 ```
 
+## NSPanelManager
+```
+services:
+   nspanelmanager-amd64: 
+      container_name: nspanelmanager 
+      image: nspanelmanager/nspanelmanager-amd64:latest
+      environment: 
+         - TZ=Europe/Madrid
+      ports:
+         - 8124:8000
+      volumes: 
+         - /docker/nspmdata/:/data/ 
+      restart: always
+```
+Remap puerto 8000 a 8124 (o otro random) dado que Portainer ya ocupa el 8000
+
+
 ## Influxdb2 
 
 Desde portainer/stacks > new stack > copiar & deploy stack
