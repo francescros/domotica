@@ -13,7 +13,7 @@ su: root / [pwd_su]
 
 Usuario: [user - domotica] / [pw_usr]
 
-### Conceder persmios SU a usuario desde terminal:
+### Conceder permisos SU a usuario desde terminal:
 
 ```
 su - 
